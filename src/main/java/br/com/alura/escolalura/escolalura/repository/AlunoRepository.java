@@ -45,7 +45,10 @@ public class AlunoRepository {
 		criarConexao();
 
 		MongoCollection<Aluno> alunos = this.database.getCollection("alunos", Aluno.class);
-		alunos.insertOne(aluno);
+		if(aluno.getId()==null)
+			alunos.insertOne(aluno);
+		else
+			alunos.updateOne(Filters.eq("_id", aluno.getId()), new Document("$set", aluno));
 		mongoClient.close();
 	}
 
