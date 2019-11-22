@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.alura.escolalura.escolalura.models.Aluno;
 import br.com.alura.escolalura.escolalura.repository.AlunoRepository;
@@ -45,5 +46,17 @@ public class AlunoController {
 		Aluno aluno = repository.obterAlunoPor(id);
 		model.addAttribute("aluno", aluno);
 		return "aluno/visualizar";
+	}
+	
+	@GetMapping("/aluno/pesquisarnome")
+	public String pesquisarNome() {
+		return "aluno/pesquisarnome";
+	}
+	
+	@GetMapping("/aluno/pesquisar")
+	public String pesquisar(@RequestParam("nome") String nome, Model model) {
+		List<Aluno> alunos = repository.pesquisarPor(nome);
+		model.addAttribute("alunos", alunos);
+		return "aluno/pesquisarnome";
 	}
 }
